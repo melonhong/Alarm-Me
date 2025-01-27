@@ -38,13 +38,15 @@ class Alarm ( // 본격적인 알람 클래스
     // Alarm의 멤버 함수
     fun getId(): UUID { return this.id }
 
-    fun checkNow() { // 현재 시간이 알람을 울릴 시간인지 체크
+    fun checkNow(): Boolean { // 현재 시간이 알람을 울릴 시간인지 체크
         val currentTime = LocalTime.now().truncatedTo(ChronoUnit.SECONDS) // 나노초 제거
         val alarmTime = this.startTime.truncatedTo(ChronoUnit.SECONDS)    // 나노초 제거
 
-        if (alarmTime== currentTime) {
+        if (alarmTime == currentTime) {
             startAlarm()
+            return true
         }
+        return false
     }
 
     fun startAlarm() {

@@ -1,6 +1,7 @@
 package com.example.alarmtest
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        val intent = Intent(this, SubActivity::class.java)
 
         var createAlarmBtn = findViewById<Button>(R.id.btn_create)
         var alarmInfo = findViewById<TextView>(R.id.tv_alarm_info)
@@ -41,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch { // 코루틴을 이용하여 매 초마다 알람이 울릴 시간인지 체크
             while (true) {
                 delay(1000) // 1초마다 실행
-                a.checkNow()
+                if (a.checkNow()) {
+                    startActivity(intent)
+                }
             }
         }
     }
